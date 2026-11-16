@@ -120,7 +120,9 @@ public class DashboardController : ControllerBase
         var monthlyChart = Enumerable.Range(0, 6).Select(i =>
         {
             var m = DateTime.UtcNow.AddMonths(-5 + i);
-            var mSales = sales.Where(s => s.InvoiceDate.Year == m.Year && s.InvoiceDate.Month == m.Month).Sum(s => s.TotalAmount);
+            var mSalesList = sales.Where(s => s.InvoiceDate.Year == m.Year && s.InvoiceDate.Month == m.Month).ToList();
+            var mSales = mSalesList.Sum(s => s.IsReturn ? -s.TotalAmount : s.TotalAmount);
+            var mCogs = mSalesList.Sum(s => s.IsReturn ? -s.TotalCogs : s.TotalCogs);
             var mProd = prodOrders.Where(o => o.CreatedAt.Year == m.Year && o.CreatedAt.Month == m.Month).Sum(o => o.ProducedQuantity);
             var mCost = prodOrders.Where(o => o.CreatedAt.Year == m.Year && o.CreatedAt.Month == m.Month).Sum(o => o.ActualMaterialCost + o.ActualLaborCost + o.ActualOverheadCost);
             return new
@@ -129,7 +131,7 @@ public class DashboardController : ControllerBase
                 Sales = mSales,
                 ProductionUnits = mProd,
                 ProductionCost = mCost,
-                GrossProfit = mSales - totalCogs
+                GrossProfit = mSales - mCogs
             };
         });
 
