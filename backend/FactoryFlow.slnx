@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FactoryFlow.API/FactoryFlow.API.csproj" />
+    <Project Path="src/FactoryFlow.Application/FactoryFlow.Application.csproj" />
+    <Project Path="src/FactoryFlow.Domain/FactoryFlow.Domain.csproj" />
+    <Project Path="src/FactoryFlow.Infrastructure/FactoryFlow.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FactoryFlow.Tests/FactoryFlow.Tests.csproj" />
+  </Folder>
+</Solution>
