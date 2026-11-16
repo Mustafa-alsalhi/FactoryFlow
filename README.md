@@ -1,144 +1,144 @@
-# 🏭 FactoryFlow ERP — Manufacturing, Production & Cost Accounting Platform
+# 🏭 FactoryFlow ERP — نظام تخطيط موارد المصانع والإنتاج والمحاسبة الصناعية
 
 [![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![Angular 21](https://img.shields.io/badge/Angular-21-DD0031?logo=angular)](https://angular.dev/)
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-EF%20Core%208-CC2927?logo=microsoftsqlserver)](https://www.microsoft.com/sql-server)
-[![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2B%20Feature--Based-0284c7)](#architecture)
+[![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2B%20Feature--Based-0284c7)](#هيكلية-المشروع)
 
-**FactoryFlow** is a commercial-grade, **multi-tenant Manufacturing, Production & Cost Accounting ERP** built for industrial enterprises (food & bakeries, garments, furniture, carpentry, aluminum & steel, detergents, and general manufacturing).
+**FactoryFlow** هو نظام **ERP متكامل وقابل للاستخدام التجاري** لإدارة المصانع والورش الإنتاجية وحساب التكاليف الصناعية والمحاسبة العامة، مصمم ليناسب مصانع الأغذية والمخابز والملابس والأثاث والنجارة والألمنيوم والحديد والمنظفات وغيرها.
 
-It integrates **production planning, Bill of Materials (BOM), Work-In-Progress (WIP) cost accounting, multi-warehouse inventory valuation (FIFO & Weighted Average), purchasing, sales, double-entry general ledger accounting, treasury, quality control, and executive analytics** into a single cohesive platform.
-
----
-
-## ✨ Key Engineering Highlights
-
-- **Strict Multi-Tenancy Isolation**: Every business entity implements `ITenantEntity`. EF Core Global Query Filters combined with JWT `tenant_id` claims guarantee zero cross-tenant data leakage.
-- **Double-Entry Accounting Engine**: Automated and manual journal entries enforce $\sum \text{Debit} = \sum \text{Credit}$ (`decimal(18,4)` precision), idempotency keys, and immutable posted entries (corrections via reversal entries only).
-- **Inventory Valuation Engine**: Per-tenant configurable **FIFO** (batch-tracked) and **Weighted Average** costing with negative-stock guards and inter-warehouse transfers.
-- **Manufacturing WIP & Cost Accounting**: Full production order lifecycle (`Draft → Planned → InProgress → Paused → Completed / Cancelled`) tracking planned vs. actual materials, direct labor (hourly/daily/monthly + overtime + bonuses/deductions), manufacturing overhead, scrap/waste cost, and unit cost variance.
-- **Bilingual & Responsive Pure CSS UI**: Built with **100% Pure CSS** (CSS Custom Properties) featuring **Arabic (RTL)** & **English (LTR)** switching and **Light / Dark** themes without third-party CSS frameworks.
+يربط النظام **تخطيط الإنتاج، وصفات التصنيع (BOM)، وحساب تكاليف الإنتاج تحت التشغيل (WIP)، وإدارة المستودعات بطريقتي (FIFO وWeighted Average)، والمشتريات، والمبيعات، والمحاسبة العامة بالقيد المزدوج، والخزينة، وفحص الجودة، ولوحة التحكم التنفيذية** في منصة واحدة متعددة المؤسسات.
 
 ---
 
-## 🛠️ Tech Stack & Tools
+## ✨ أبرز المزايا الهندسية والمحاسبية
 
-### Backend
-| Category | Technology |
+- **عزل كامل للمؤسسات (Multi-Tenancy Isolation)**: كل كيان يطبق `ITenantEntity` مع فلاتر استعلام شاملة في EF Core (`Global Query Filters`) وتحقق من `tenant_id` داخل الـ JWT لمنع أي تداخل بين بيانات المؤسسات.
+- **محرك محاسبة بالقيد المزدوج (Double-Entry Accounting)**: تحقق إلزامي من توازن القيد ($\sum \text{المدين} = \sum \text{الدائن}$) بدقة `decimal(18,4)`، مع مفاتيح منع التكرار (`IdempotencyKey`) ومنع تعديل أو حذف القيود المرحلة (التصحيح عبر قيود العكس فقط).
+- **تقييم المخزون الدقيق (FIFO & Weighted Average)**: محرك مخزني يدعم اختيار طريقة التقييم لكل مؤسسة، تتبع الدفعات وتواريخ الصلاحية، منع الرصيد السالب، والتحويل بين المستودعات.
+- **حساب تكاليف الإنتاج (WIP Cost Accounting)**: متابعة دورة أمر التصنيع كاملة (`Draft → Planned → InProgress → Paused → Completed / Cancelled`)، ومقارنة التكلفة المخططة بالفعلية (مواد خام + أجور مباشرة + تكاليف صناعية غير مباشرة + تكلفة التالف والهدر).
+- **واجهة حديثة بـ Pure CSS**: تصميم متجاوب 100% باستخدام **CSS خالص** (CSS Custom Properties) مع دعم **اللغة العربية (RTL) والإنجليزية (LTR)** والوضع **الفاتح والداكن (Light / Dark)**.
+
+---
+
+## 🛠️ التقنيات والأدوات المستخدمة
+
+### الواجهة الخلفية (Backend)
+| المجال | التقنية / الأداة |
 | :--- | :--- |
-| **Framework** | ASP.NET Core Web API (.NET 8, C#) |
-| **Architecture** | Clean Architecture (`Domain`, `Application`, `Infrastructure`, `API`, `Tests`) |
-| **ORM & Database** | Entity Framework Core 8, Microsoft SQL Server / LocalDB |
-| **Security & Auth** | JWT Bearer Authentication, Refresh Token Rotation, BCrypt Password Hashing, RBAC |
-| **Validation & Docs** | FluentValidation, Swagger / OpenAPI, Global Exception Middleware |
-| **Protection** | Rate Limiting, CORS Policy, Concurrency Tokens (`RowVersion`), Audit Logging |
+| **الإطار البرمجي** | ASP.NET Core Web API (.NET 8, C#) |
+| **المعمارية** | Clean Architecture (`Domain`, `Application`, `Infrastructure`, `API`, `Tests`) |
+| **قاعدة البيانات والـ ORM** | Microsoft SQL Server / LocalDB + Entity Framework Core 8 + LINQ |
+| **الأمان والمصادقة** | JWT Bearer Authentication + Refresh Token Rotation + BCrypt + RBAC |
+| **التحقق والتوثيق** | FluentValidation + Swagger / OpenAPI + Global Exception Middleware |
+| **الحماية والتدقيق** | Rate Limiting + CORS + Concurrency Tokens (`RowVersion`) + Audit Logs |
 
-### Frontend
-| Category | Technology |
+### الواجهة الأمامية (Frontend)
+| المجال | التقنية / الأداة |
 | :--- | :--- |
-| **Framework** | Angular 21 (Standalone Components, Zoneless Change Detection, Signals) |
-| **Language** | TypeScript, RxJS, Reactive & Template Forms |
-| **Architecture** | Feature-Based (`core/`, `shared/`, `layouts/`, `features/`) |
-| **HTTP & Routing** | Angular Router with Auth Guards, HTTP Interceptor with auto JWT refresh |
-| **Styling** | 100% Pure CSS (`styles.css` with CSS Variables, Grid/Flexbox, Print CSS) |
+| **الإطار البرمجي** | Angular 21 (Standalone Components, Zoneless Change Detection, Signals) |
+| **اللغة والمكتبات** | TypeScript + RxJS + Reactive & Template Forms |
+| **المعمارية** | Feature-Based Architecture (`core/`, `shared/`, `layouts/`, `features/`) |
+| **التوجيه والاتصال** | Angular Router + Auth Guards + HTTP Interceptor لتجديد التوكن تلقائياً |
+| **التصميم** | 100% Pure CSS (`styles.css` بمتغيرات CSS، Grid/Flexbox، وتنسيق الطباعة) |
 
 ---
 
-## 📦 ERP Modules & Systems
+## 📦 الأنظمة والوحدات في المشروع
 
-1. **Multi-Tenancy, Users & RBAC**: Company registration, tenant fiscal/valuation settings, multi-branch management, user invitation/activation, 10 default roles, granular module permissions (`View`, `Create`, `Edit`, `Delete`, `Approve`, `Print`, `Export`), and login history.
-2. **Executive Dashboard**: Real-time SQL-backed KPIs (Production Value & Cost, Sales, Purchases, Expenses, Net Profit, Raw Material & Finished Goods Valuation, Active/Completed Orders, Defective Units, Low Stock Alerts, Planned vs. Actual Cost Comparison) with date and warehouse filters.
-3. **Raw Materials & Finished Products**: SKUs, barcodes, categories, units of measure, minimum stock thresholds, semi-finished & finished goods, and standard cost tracking.
-4. **Bill of Materials (BOM)**: Multi-component recipes, waste percentage calculations, versioning, and instant target-quantity cost estimation.
-5. **Manufacturing & WIP Costing**: Production order scheduling, material issue/return to WIP, direct labor logging, overhead allocation (Electricity, Water, Rent, Maintenance, Depreciation), and completion transfer to Finished Goods.
-6. **Labor, Production Lines & Machines**: Employee wage models (Hourly, Daily, Monthly), production lines, machine hourly operating costs, run/downtime hours, and maintenance logs.
-7. **Quality Control (QC)**: Raw material, in-process, and finished product inspections with accepted/rejected quantities, defect reasons, and automated defect notifications.
-8. **Multi-Warehouse Inventory**: Stock balances, batch & expiry tracking, inter-warehouse transfers, stock adjustments, and full inventory transaction ledger.
-9. **Purchasing & Suppliers**: Suppliers, purchase orders, purchase invoices & returns with automated inventory receipt, supplier balance updates, and GL journal posting.
-10. **Sales & Customers**: Customers, credit limits, cash & credit sales invoices/returns with automated stock issue, COGS calculation, and GL journal posting.
-11. **General Ledger & Financial Statements**: Chart of Accounts, automated & manual Journal Entries, entry reversal, General Ledger, Trial Balance, Income Statement, and Balance Sheet.
-12. **Treasury & Multi-Currency**: Cashboxes, bank accounts, receipt/payment/transfer vouchers, daily cashbox closing, multi-currency exchange rates, and configurable tax rates.
-13. **Reports, Notifications & Audit Trail**: Production costing & variance reports with CSV (Excel) export and Print/PDF support, system alerts, and immutable audit logs.
+1. **إدارة المؤسسات والمستخدمين والصلاحيات (Multi-Tenancy & RBAC)**: تسجيل المؤسسات، إدارة الفروع، إعدادات العملة والضرائب وطرق التقييم، دعوة وتفعيل/تعطيل المستخدمين، 10 أدوار افتراضية، صلاحيات تفصيلية (عرض، إضافة، تعديل، حذف، اعتماد، طباعة، تصدير)، وسجل تسجيل الدخول.
+2. **لوحة التحكم التنفيذية (Executive Dashboard)**: مؤشرات حقيقية من قاعدة البيانات (إجمالي قيمة وتكلفة الإنتاج، المبيعات، المشتريات، المصروفات، صافي الأرباح، قيمة المواد الخام والمنتجات النهائية، أوامر الإنتاج الجارية والمكتملة، التالف، تنبيهات انخفاض المخزون، ومقارنة التكلفة المخططة بالفعلية) مع فلاتر التاريخ والمستودع.
+3. **إدارة المواد الخام والمنتجات النهائية**: الأكواد `SKU`، الباركود، التصنيفات، وحدات القياس، الحدود الدنيا للمخزون، المنتجات نصف المصنعة والنهائية، ومتابعة التكلفة المعيارية.
+4. **وصفات الإنتاج (Bill of Materials - BOM)**: تحديد مكونات المنتج ونسب الهدر وإصدارات الوصفة، مع حاسبة فورية لتقدير تكلفة المواد والأجور والمصروفات غير المباشرة لأي كمية مطلوبة.
+5. **إدارة عمليات التصنيع وحساب التكاليف**: إنشاء أوامر الإنتاج، صرف وإرجاع المواد للمستودع، تسجيل ساعات العمل العادية والإضافية والمكافآت والخصومات، تسجيل التكاليف غير المباشرة (كهرباء، مياه، إيجار، صيانة، إهلاك)، وإغلاق الأمر بترحيل المنتجات الجاهزة إلى المخزون وحساب تكلفة الوحدة.
+6. **العمالة والآلات وخطوط الإنتاج**: إدارة العمال بأنظمة الأجر (بالساعة، اليومي، الشهري)، خطوط الإنتاج، الآلات، تكلفة تشغيل الساعة، ساعات التشغيل والتوقف، وسجل الصيانة.
+7. **إدارة الجودة (Quality Control)**: فحص المواد الخام وأثناء الإنتاج والمنتج النهائي، تسجيل الكميات المقبولة والمرفوضة وأسباب العيوب مع إشعارات تلقائية.
+8. **إدارة المستودعات والمخزون**: تعدد المستودعات، الأرصدة الحية، سجل حركات المخزون، التحويل بين المستودعات، وتسويات الجرد.
+9. **المشتريات والموردون**: إدارة الموردين، طلبات وأوامر الشراء، فواتير الشراء والمرتجعات مع الترحيل الآلي للمخزون وأرصدة الموردين والقيود المحاسبية.
+10. **المبيعات والعملاء**: إدارة العملاء، حدود الائتمان، فواتير البيع النقدي والآجل والمرتجعات مع خصم المخزون وحساب تكلفة البضاعة المباعة (`COGS`) وترحيل القيود آلياً.
+11. **المحاسبة العامة والقيد المزدوج (General Ledger)**: دليل الحسابات، القيود اليومية الآلية واليدوية، عكس القيود، دفتر الأستاذ، ميزان المراجعة، قائمة الدخل، والميزانية العمومية.
+12. **الصندوق والبنوك والعملات والضرائب**: الصناديق، الحسابات البنكية، سندات القبض والصرف، الإغلاق اليومي للصندوق، تعدد العملات وأسعار الصرف، وإعدادات الضرائب.
+13. **التقارير والإشعارات وسجل التدقيق**: تقارير تكاليف الإنتاج وفروقاتها مع التصدير إلى `Excel (CSV)` والطباعة/`PDF`، نظام الإشعارات، وسجل التدقيق الشامل.
 
 ---
 
-## 🏗️ Project Structure
+## 🏗️ هيكلية المشروع
 
 ```text
 FactoryFlow/
 ├── backend/
 │   ├── FactoryFlow.slnx
 │   ├── src/
-│   │   ├── FactoryFlow.Domain/          # Entities, Enums, Domain Rules
-│   │   ├── FactoryFlow.Application/     # Interfaces, Constants, Validation Contracts
-│   │   ├── FactoryFlow.Infrastructure/  # EF Core AppDbContext, Accounting, Inventory, Seeder
-│   │   └── FactoryFlow.API/             # REST Controllers, Auth, Middleware, Swagger
+│   │   ├── FactoryFlow.Domain/          # الكيانات، التعدادات، القواعد المحاسبية
+│   │   ├── FactoryFlow.Application/     # الواجهات، الثوابت، عقود التحقق
+│   │   ├── FactoryFlow.Infrastructure/  # EF Core AppDbContext، المحاسبة، المخزون، Seeder
+│   │   └── FactoryFlow.API/             # المتحكمات REST، المصادقة، Swagger، Middleware
 │   └── tests/
-│       └── FactoryFlow.Tests/           # Automated Integration & Financial Invariant Tests
+│       └── FactoryFlow.Tests/           # حزمة الاختبارات الآلية على SQL Server LocalDB
 ├── frontend/
 │   └── src/
-│       ├── styles.css                   # Pure CSS Design System (Light/Dark + RTL/LTR)
+│       ├── styles.css                   # نظام التصميم بـ Pure CSS (فاتح/داكن + RTL/LTR)
 │       └── app/
-│           ├── core/                    # Auth, API, I18n, Interceptor, Guards
-│           ├── shared/                  # Reusable UI Components
-│           ├── layouts/                 # Responsive ERP Shell (Sidebar, Topbar, Notifications)
-│           └── features/                # Feature-Based ERP Modules
+│           ├── core/                    # خدمات المصادقة، API، الترجمة، الحراس، Interceptor
+│           ├── shared/                  # المكونات المشتركة
+│           ├── layouts/                 # الهيكل الرئيسي (القائمة الجانبية، الشريط العلوي)
+│           └── features/                # وحدات النظام وفق Feature-Based Architecture
 └── docs/
-    ├── ARCHITECTURE.md                  # System Architecture & Invariants
-    ├── ERD.md                           # Entity Relationship Diagram (Mermaid)
-    └── DEPLOYMENT.md                    # Production Deployment Guide
+    ├── ARCHITECTURE.md                  # وثيقة المعمارية التفصيلية
+    ├── ERD.md                           # مخطط علاقات قاعدة البيانات (Mermaid)
+    └── DEPLOYMENT.md                    # دليل النشر للإنتاج
 ```
 
 ---
 
-## 🚀 Quick Start
+## 🚀 طريقة التشغيل السريع
 
-### Prerequisites
+### المتطلبات
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)
-- [Node.js 20 LTS+](https://nodejs.org/) & Angular CLI
+- [Node.js 20 LTS+](https://nodejs.org/) وAngular CLI
 - Microsoft SQL Server / LocalDB (`(localdb)\MSSQLLocalDB`)
 
-### 1. Run Backend API
+### 1. تشغيل الخادم الخلفي (Backend API)
 ```powershell
 cd backend
 dotnet run --project src/FactoryFlow.API/FactoryFlow.API.csproj --urls http://localhost:5155
 ```
-- The database (`FactoryFlowDb`) is automatically created and seeded on first startup.
-- **Swagger UI**: `http://localhost:5155/swagger`
+- يتم إنشاء قاعدة البيانات `FactoryFlowDb` وتعبئتها بالبيانات الأولية تلقائياً عند أول تشغيل.
+- **واجهة Swagger**: `http://localhost:5155/swagger`
 
-### 2. Run Frontend (Angular)
+### 2. تشغيل الواجهة الأمامية (Angular)
 ```powershell
 cd frontend
 npm install
 npm start
 ```
-- Open `http://localhost:4200`
+- افتح المتصفح على: `http://localhost:4200`
 
-### 3. Demo Credentials
-Use the **"Fill Demo Account (DEMO)"** button on the login screen, or sign in with:
-- **Company Code**: `DEMO`
-- **Email**: `admin@factoryflow.demo`
-- **Password**: `Admin@123456`
+### 3. بيانات الحساب التجريبي
+يمكنك الضغط على زر **"تعبئة بيانات الحساب التجريبي (DEMO)"** في شاشة الدخول، أو استخدام:
+- **رمز المؤسسة**: `DEMO`
+- **البريد الإلكتروني**: `admin@factoryflow.demo`
+- **كلمة المرور**: `Admin@123456`
 
 ---
 
-## 🧪 Automated Tests
+## 🧪 الاختبارات الآلية
 
-Run the automated test suite against SQL Server LocalDB (`FactoryFlowTestDb`):
+لتشغيل حزمة الاختبارات على SQL Server LocalDB (`FactoryFlowTestDb`):
 ```powershell
 cd backend
 dotnet run --project tests/FactoryFlow.Tests/FactoryFlow.Tests.csproj
 ```
-Verified scenarios:
-- Multi-Tenancy Global Query Filter Isolation
-- Double-Entry Accounting Balance (`Debit == Credit`) & Reversal Integrity
-- Weighted Average Valuation & Negative Stock Guard
-- FIFO Batch Valuation Precision
-- BCrypt Password Hashing & Refresh Token Lifecycle
+تشمل الاختبارات التحقق من:
+- عزل البيانات بين المؤسسات (`Multi-Tenancy Global Query Filters`).
+- توازن القيد المزدوج (`Debit == Credit`) وعكس القيود.
+- تقييم المخزون بالمتوسط المرجح ومنع الرصيد السالب.
+- دقة تقييم المخزون بطريقة `FIFO`.
+- تشفير كلمات المرور ودورة حياة `Refresh Token`.
 
 ---
 
-## 📄 Documentation
-- [Architecture Overview](docs/ARCHITECTURE.md)
-- [Entity Relationship Diagram (ERD)](docs/ERD.md)
-- [Production Deployment Guide](docs/DEPLOYMENT.md)
+## 📄 الوثائق الإضافية
+- [وثيقة المعمارية (Architecture)](docs/ARCHITECTURE.md)
+- [مخطط قاعدة البيانات (ERD)](docs/ERD.md)
+- [دليل النشر للإنتاج (Deployment)](docs/DEPLOYMENT.md)
