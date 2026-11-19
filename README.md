@@ -11,6 +11,83 @@
 
 ---
 
+## 📸 صور من داخل النظام
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/login.png" alt="تسجيل الدخول وتسجيل المؤسسة" width="100%" /><br/>
+      <b>تسجيل الدخول وتسجيل المؤسسة (Multi-Tenant Auth)</b>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/dashboard.png" alt="لوحة التحكم التنفيذية" width="100%" /><br/>
+      <b>لوحة التحكم التنفيذية والمخططات البيانية</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/bill-of-materials.png" alt="وصفات الإنتاج BOM" width="100%" /><br/>
+      <b>وصفات الإنتاج (BOM) وحاسبة التكاليف</b>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/production-orders.png" alt="أوامر الإنتاج" width="100%" /><br/>
+      <b>إدارة أوامر الإنتاج</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/production-costs.png" alt="حساب تكاليف الإنتاج" width="100%" /><br/>
+      <b>تتبع تكاليف الإنتاج تحت التشغيل (WIP)</b>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/workers-machines.png" alt="العمالة والآلات" width="100%" /><br/>
+      <b>إدارة العمالة والأجور والآلات</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/quality-control.png" alt="فحص الجودة" width="100%" /><br/>
+      <b>إدارة الجودة والفحص (Quality Control)</b>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/المستودعات%20والحركات.png" alt="المستودعات والحركات" width="100%" /><br/>
+      <b>المستودعات وأرصدة وحركات المخزون</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/nventory-management11.png" alt="المواد الخام" width="100%" /><br/>
+      <b>إدارة المواد الخام والحد الأدنى للمخزون</b>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/nventory-management22.png" alt="المنتجات النهائية" width="100%" /><br/>
+      <b>إدارة المنتجات النهائية ونصف المصنعة</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/purchases-suppliers.png" alt="المشتريات والموردون" width="100%" /><br/>
+      <b>إدارة المشتريات والموردين</b>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/sales-customers.png" alt="المبيعات والعملاء" width="100%" /><br/>
+      <b>إدارة المبيعات والعملاء وCOGS</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/general-ledger.png" alt="المحاسبة العامة" width="100%" /><br/>
+      <b>المحاسبة العامة والقيد المزدوج</b>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/screenshots/financial-reports.png" alt="التقارير المالية والإنتاجية" width="100%" /><br/>
+      <b>التقارير والتحليلات والتصدير (CSV / PDF)</b>
+    </td>
+  </tr>
+</table>
+
+---
+
 ## ✨ أبرز المزايا الهندسية والمحاسبية
 
 - **عزل كامل للمؤسسات (Multi-Tenancy Isolation)**: كل كيان يطبق `ITenantEntity` مع فلاتر استعلام شاملة في EF Core (`Global Query Filters`) وتحقق من `tenant_id` داخل الـ JWT لمنع أي تداخل بين بيانات المؤسسات.
